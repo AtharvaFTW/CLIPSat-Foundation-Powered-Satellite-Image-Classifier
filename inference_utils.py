@@ -6,6 +6,7 @@ import os
 from tqdm.auto import tqdm
 from transformers import CLIPProcessor, CLIPModel
 import json
+import pickle
 
 device="cuda" if torch.cuda.is_available() else "cpu"
 model_id="openai/clip-vit-base-patch32"
