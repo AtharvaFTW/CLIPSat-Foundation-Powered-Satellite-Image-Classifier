@@ -5,26 +5,31 @@ import numpy as np
 import os
 from tqdm.auto import tqdm
 from transformers import CLIPProcessor, CLIPModel
+import json
 
 device="cuda" if torch.cuda.is_available() else "cpu"
 model_id="openai/clip-vit-base-patch32"
 processor=CLIPProcessor.from_pretrained(model_id)
 model=CLIPModel.from_pretrained(model_id).to(device)
 
-CLASS_LABELS=[
-    "Annual Crop","Forest","Herbaceous Vegetation","Highway","Industrial","Pasture",
-    "Permanent Crop","Residential Area","River","Sea Lake"
-]
+with open("classifier.pkl","rb") as f:
+    classifier=pickle.load(f)
 
-PROMPT=[f"A satellite image of {label}" for label in CLASS_LABELS]
+with open("label_to_index.json","r") as f:
+    label_to_index=json.load(f)
+    index_to_label={v:k for k,v in label_to_index.items()}
+
 
 def classify_image(image):
-    image=image.convert("RGB")
-    inputs=processor(images=image, text=PROMPT,return_tensors="pt",padding=True).to(device)
+    inputs=processor(images=image,return_tensors="pt").to(device)
     with torch.no_grad():
-        outputs=model(**inputs)
-        logits_per_image=outputs.logits_per_image
-        probs=logits_per_image.softmax(dim=1).squeeze()
+        image_features=model.get_image_features(**inputs)
+        embedding=image_features.cpu().numpy().flatten().reshape(1,-1)
     
-    predicted_idx=probs.argmax().item()
-    return CLASS_LABELS[predicted_idx], probs[predicted_idx].item(),probs.cpu().numpy()
+    pred=classifier.predict(embedding)[0]
+    proba=classifier.predict_proba(embedding)[0]
+    
+    label=index_to_label[pred]
+    confidence=probas[pred]
+    
+    return label,confidence,proba,list(index_to_label.values())
