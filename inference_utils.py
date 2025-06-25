@@ -14,7 +14,7 @@ processor=CLIPProcessor.from_pretrained(model_id)
 model=CLIPModel.from_pretrained(model_id).to(device)
 
 with open("classifier.pkl","rb") as f:
-    pickle.dump(classifier,f,protocol=4)
+    classifier=pickle.load(f)
 
 with open("label_to_index.json","r") as f:
     label_to_index=json.load(f)
