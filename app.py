@@ -2,7 +2,7 @@ import streamlit as st
 from PIL import Image
 from inference_utils import classify_image
 
-st.set_page_config(page_title="Zero-Shot Satellite Classifier", layout="centered")
+st.set_page_config(page_title="CLIPSat-Foundation-Powered-Satellite-Image-Classifier", layout="centered")
 st.title("🛰️ Zero-Shot Satellite Image Classification")
 
 st.write("Upload a satellite image below. The model will predict its category using CLIP ViT-B/32.")
