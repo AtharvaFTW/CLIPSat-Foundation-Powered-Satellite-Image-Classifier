@@ -16,9 +16,9 @@ model=CLIPModel.from_pretrained(model_id).to(device)
 with open("classifier.pkl","rb") as f:
     classifier=pickle.load(f)
 
-with open("label_to_index.json","r") as f:
-    label_to_index=json.load(f)
-    index_to_label={v:k for k,v in label_to_index.items()}
+with open("labels_to_index.json","r") as f:
+    labels_to_index=json.load(f)
+    index_to_label={v:k for k,v in labels_to_index.items()}
 
 
 def classify_image(image):
