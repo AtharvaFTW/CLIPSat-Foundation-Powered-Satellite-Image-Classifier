@@ -14,7 +14,7 @@ if uploaded_image is not None:
     st.image(image, caption="Uploaded Image", use_container_width=True)
 
     with st.spinner("Classifying with CLIP ViT-B/32..."):
-        label, confidence, _ = classify_image(image)
+        label, confidence, _, _ = classify_image(image)
 
     st.success(f"Prediction: A satellite image of **{label}** with confidence **{confidence:.4f}**")
 else:
