@@ -31,6 +31,6 @@ def classify_image(image):
     proba=classifier.predict_proba(embedding)[0]
     
     label=index_to_label[pred]
-    confidence=probas[pred]
+    confidence=proba[pred]
     
     return label,confidence,proba,list(index_to_label.values())
