@@ -3,7 +3,7 @@ from PIL import Image
 from inference_utils import classify_image
 
 st.set_page_config(page_title="CLIPSat-Foundation-Powered-Satellite-Image-Classifier", layout="centered")
-st.title("🛰️ Zero-Shot Satellite Image Classification")
+st.title("🛰️ CLIPSat-Foundation-Powered-Satellite-Image-Classifier")
 
 st.write("Upload a satellite image below. The model will predict its category using CLIP ViT-B/32.")
 
